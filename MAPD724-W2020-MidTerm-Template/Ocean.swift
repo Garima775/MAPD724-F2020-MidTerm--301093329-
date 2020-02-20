@@ -27,7 +27,7 @@ class Ocean : GameObject
     
     override func Reset()
     {
-        self.position.y = 1864.67
+        self.position.x = 1864.67
     }
     
     override func Start()
@@ -44,7 +44,7 @@ class Ocean : GameObject
     
     func Move()
     {
-        self.position.y -= self.dy!
+        self.position.x -= self.dy!
     }
 
 }
