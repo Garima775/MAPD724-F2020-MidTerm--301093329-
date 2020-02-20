@@ -5,7 +5,7 @@ class Plane: GameObject
     // constructor
     init()
     {
-        super.init(imageString: "plane", initialScale: 2.0)
+        super.init(imageString: "plane", initialScale: 1.0)
         Start()
     }
     
