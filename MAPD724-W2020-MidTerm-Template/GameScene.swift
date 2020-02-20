@@ -16,11 +16,11 @@ class GameScene: SKScene {
     
     var gameManager: GameManager?
     
-   // var oceanSprite1: Ocean?
+    var oceanSprite1: Ocean?
     var oceanSprite2: Ocean?
     var planeSprite: Plane?
     var islandSprite: Island?
-    var cloudSprites: Cloud?
+    var cloudSprites: [Cloud] = []
     
     //var config: Config?
     
@@ -35,39 +35,34 @@ class GameScene: SKScene {
         self.name = "GAME"
         
         // add ocean
-//        self.oceanSprite1 = Ocean()
-//        self.oceanSprite1?.position = CGPoint(x: 0, y: 1864.67)
-//        self.addChild(oceanSprite1!)
+        self.oceanSprite1 = Ocean()
         
-        self.oceanSprite2 = Ocean()
-        self.oceanSprite2?.position = CGPoint(x: 0, y: 177)
-        self.oceanSprite2?.size = CGSize(width: 5000, height: 5000)
-        self.addChild(oceanSprite2!)
+        self.oceanSprite1?.position = CGPoint(x: 0, y:177 )
+        self.oceanSprite1?.size = CGSize(width: 5000, height: 5000)
+        self.addChild(oceanSprite1!)
+        
+        
         
         // add plane
         self.planeSprite = Plane()
-        self.planeSprite?.position = CGPoint(x: -575, y: 0)
+        self.planeSprite?.size = CGSize(width: 70, height: 70)
+        self.planeSprite?.position = CGPoint(x: -300, y: 0)
         self.addChild(planeSprite!)
         
         // add island
         self.islandSprite = Island()
+        self.islandSprite?.size = CGSize(width: 70, height: 70)
+        self.islandSprite?.position = CGPoint(x: -300, y: 0)
         self.addChild(islandSprite!)
         
-        
-        self.cloudSprites = Cloud()
-        self.addChild(cloudSprites!)
-        
-        
-        
-        
         // add clouds
-//        for index in 0...1
+//        for index in 0...3
 //        {
-//            let cloud: Cloud = Cloud()
-//            cloudSprites.append(cloud)
-//            self.addChild(cloudSprites[index])
+            let cloud: Cloud = Cloud()
+            cloudSprites.append(cloud)
+            self.addChild(cloudSprites[0])
 //        }
-//
+        
         let engineSound = SKAudioNode(fileNamed: "engine.mp3")
         self.addChild(engineSound)
         engineSound.autoplayLooped = true
@@ -125,23 +120,19 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval)
     {
-       // self.oceanSprite1?.Update()
-        self.oceanSprite2?.Update()
+        self.oceanSprite1?.Update()
+        
         
         self.planeSprite?.Update()
         self.islandSprite?.Update()
         
-        self.cloudSprites?.Update()
-        
-        
-        
         CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: islandSprite!)
         
-//        for cloud in cloudSprites
-//        {
-//            cloud.Update()
-//            CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: cloud)
-//        }
+        for cloud in cloudSprites
+        {
+            cloud.Update()
+            CollisionManager.squaredRadiusCheck(scene: self, object1: planeSprite!, object2: cloud)
+        }
         
         if(ScoreManager.Lives < 1)
         {
